@@ -2,6 +2,7 @@
 #define __TRACER_VECTOR_3D_H__
 
 #include <cmath>
+#include <cstdint>
 
 
 class Vector3D {
@@ -13,12 +14,19 @@ class Vector3D {
   public:
     Vector3D() : x_(0.0f), y_(0.0f), z_(0.0f) {}
     Vector3D(float x, float y, float z) : x_(x), y_(y), z_(z) {}
+    explicit Vector3D(const Vector3D& that)
+        : x_(that.x_), y_(that.y_), z_(that.z_) {
+    }
 
     bool operator==(const Vector3D& that) const;
     bool operator!=(const Vector3D& that) const;
 
     Vector3D operator+() const;
     Vector3D operator-() const;
+    Vector3D operator+(const float s) const;
+    Vector3D operator-(const float s) const;
+    Vector3D operator*(const float s) const;
+    Vector3D operator/(const float s) const;
     Vector3D operator+(const Vector3D& that) const;
     Vector3D operator-(const Vector3D& that) const;
     Vector3D operator*(const Vector3D& that) const;
@@ -55,11 +63,27 @@ inline bool Vector3D::operator!=(const Vector3D& that) const {
 }
 
 inline Vector3D Vector3D::operator+() const {
-  return *this;
+  return Vector3D(*this);
 }
 
 inline Vector3D Vector3D::operator-() const {
   return Vector3D(-this->x_, -this->y_, -this->z_);
+}
+
+inline Vector3D Vector3D::operator+(const float s) const {
+  return Vector3D(this->x_ + s, this->y_ + s, this->z_ + s);
+}
+
+inline Vector3D Vector3D::operator-(const float s) const {
+  return Vector3D(this->x_ - s, this->y_ - s, this->z_ - s);
+}
+
+inline Vector3D Vector3D::operator*(const float s) const {
+  return Vector3D(this->x_ * s, this->y_ * s, this->z_ * s);
+}
+
+inline Vector3D Vector3D::operator/(const float s) const {
+  return Vector3D(this->x_ / s, this->y_ / s, this->z_ / s);
 }
 
 inline Vector3D Vector3D::operator+(const Vector3D& that) const {

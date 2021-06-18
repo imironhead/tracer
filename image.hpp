@@ -19,11 +19,18 @@ class Image {
           width_(width) {
     }
 
+    Vector3D* operator[](uint32_t y);
+
     int32_t Height() const { return this->height_; }
     int32_t Width() const { return this->width_; }
+
     void Fill(const Vector3D& color);
     void SaveAsBmp(const char* path) const;
 };
+
+inline Vector3D* Image::operator[](uint32_t y) {
+  return this->pixels_.data() + y * this->width_;
+}
 
 inline void Image::Fill(const Vector3D& color) {
   std::fill(this->pixels_.begin(), this->pixels_.end(), color);
